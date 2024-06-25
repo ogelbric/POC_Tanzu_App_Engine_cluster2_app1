@@ -8,6 +8,7 @@ Previous articles in this series are:
 ```
 ## (1) Create second cluster
 
+I found running 5 workers as best-effort-medium works best 
 
 ![Version](https://github.com/ogelbric/POC_Tanzu_App_Engine_cluster2_app1/blob/main/cl2cr1.png)
 
