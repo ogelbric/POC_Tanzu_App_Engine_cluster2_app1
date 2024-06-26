@@ -15,6 +15,8 @@ Previous articles in this series are:
 (3) Create an avaliability target
 (4) Change replica count in Space
 (5) Change app to tell me which node I am running on (Thank you Matt Benley for the little go app)
+(6) Simple way to generate traffic
+(7) Trouble shooting commands
 
 ```
 
@@ -136,5 +138,32 @@ Node 1:
 
 Node2
 ![Version](https://github.com/ogelbric/POC_Tanzu_App_Engine_cluster2_app1/blob/main/sp11.png)
+
+## (6) Simple way to generate traffic
+
+```
+watch -n 1 curl -v http://orf-nginx-app-engine.tanzu.gelbrich.com/
+```
+
+## (7) Trouble shooting commands (some things needed to be re-giggled)
+
+```
+
+kubectl config use-context orfscluster ; kubectl get  pkgi -A 
+kubectl config use-context orfscluster ; kubectl get  pods -A >x.old ; kubectl config use-context orfscluster2 ; kubectl get  pods -A  > x.new ; diff -y  x.old x.new
+kubectl config use-context orfscluster ; kubectl get deploy -n vmware-system-tmc 
+kubectl config use-context orfscluster ; kubectl delete pkgi cert-manager.tanzu.vmware.com -n tanzu-cluster-group-system
+kubectl config use-context orfscluster ; kubectl rollout restart deploy kapp-controller -n tkg-system
+kubectl config use-context orfscluster ; kubectl rollout restart deployment sync-agent -n vmware-system-tmc
+kubectl config use-context orfscluster ; kubectl rollout restart deployment/tmc-observer -n vmware-system-tmc
+kubectl config use-context orfscluster ; kubectl rollout restart deployment/policy-sync-extension  -n vmware-system-tmc
+kubectl config use-context orfscluster ; kubectl rollout restart deployment/policy-insight-extension-manager  -n vmware-system-tmc
+kubectl config use-context orfscluster ; kubectl rollout restart deployment/package-deployment  -n vmware-system-tmc
+kubectl config use-context orfscluster ; kubectl rollout restart deployment/tmc-observer  -n vmware-system-tmc
+ 
+
+```
+
+
 
 
