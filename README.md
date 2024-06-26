@@ -14,6 +14,7 @@ Previous articles in this series are:
 (2) Add a label
 (3) Create an avaliability target
 (4) Change replica count in Space
+(5) Change app to tell me which node I am running on (Thank you Matt Benley for the little go app)
 
 ```
 
@@ -80,7 +81,7 @@ And depending which pod you deployed the URL should be working:
 And we have 2 clusters in the space and 2 x the app 
 ![Version](https://github.com/ogelbric/POC_Tanzu_App_Engine_cluster2_app1/blob/main/sp9.png)
 
-## (5) change app to tell me which hode I am running on (Thank you Matt Benley for the little go app)
+## (5) Change app to tell me which node I am running on (Thank you Matt Benley for the little go app)
 
 ```
 export KUBECONFIG="/root/.config/tanzu/kube/config"
