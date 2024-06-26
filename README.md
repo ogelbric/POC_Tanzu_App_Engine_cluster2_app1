@@ -80,8 +80,56 @@ And depending which pod you deployed the URL should be working:
 And we have 2 clusters in the space and 2 x the app 
 ![Version](https://github.com/ogelbric/POC_Tanzu_App_Engine_cluster2_app1/blob/main/sp9.png)
 
-## (5) change app to tell me which hode I am running on 
+## (5) change app to tell me which hode I am running on (Thank you Matt Benley for the little go app)
 
+```
+export KUBECONFIG="/root/.config/tanzu/kube/config"
+tanzu plugin install --group vmware-tanzu/app-developer
+#
+source ~/tanzucli.src
+export proj="AMER-East"
+export sp="orfspace1"
+export org="sa-tanzu-platform"
+export cl="orfclustergroup"
+export w=''
+#export w='--wide'
+export line="-----------------------------------------------------------------"
+yes | tanzu context delete $org
+source ~/tanzucli.src
+tanzu login
+tanzu project use $proj
+tanzu space use $sp 
+#
+cd orf-nginx-app-engine/
+#
+tanzu app init
+? What is your app's name? orf-nginx-app-engine
+? Which directory contains your app's source code? .
+? Select container build type to use for this app: buildpacks
+✓ Created tanzu.yml
+✓ Recorded app configuration to .tanzu/config/orf-nginx-app-engine.yml
+
+#cat /tmp/orf-nginx-app-engine.yml
+#apiVersion: apps.tanzu.vmware.com/v1
+#kind: ContainerApp
+#metadata:
+#  creationTimestamp: null
+#  name: orf-nginx-app-engine
+#spec:
+#  image: gcr.io/boreal-rain-256712/go-hostname:latest
+#  replicas: 1
+#  ports:
+#  - name: main
+#    port: 8080
+
+cp /tmp/orf-nginx-app-engine.yml .tanzu/config/orf-nginx-app-engine.yml
+
+tanzu build config --build-plan-source-type=ucp --containerapp-registry gcr.io/boreal-rain-256712/{name}
+#
+#
+tanzu deploy
+#
+```
 Node 1:
 ![Version](https://github.com/ogelbric/POC_Tanzu_App_Engine_cluster2_app1/blob/main/sp10.png)
 
